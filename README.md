@@ -8,13 +8,13 @@ Modelo C4 navegable en IcePanel: https://s.icepanel.io/8it5iVKhNeTy2G/qBcE
 
 - Nube: AWS, con us-east-1 como región principal y us-east-2 para DR. Los servicios corren en EKS; los datos en Aurora PostgreSQL, ElastiCache y DynamoDB.
 - Integración: dos API Gateway (uno público para clientes y uno privado para el backoffice) y un BFF por canal que orquesta los microservicios. El backend es Java 25: Spring Boot 4.1 WebFlux para los BFF y el dominio, y Quarkus 3.40 en modo nativo para Notificaciones y Auditoría.
-- Transferencias: saga orquestada con idempotencia y outbox. Según el destino van por el core (propias), por la Red de Pagos Instantáneos del BCE (ISO 20022) o por el SPI.
+- Transferencias: **saga orquestada con idempotencia y outbox**. Según el destino van por el core (propias), por la Red de Pagos Instantáneos del BCE (ISO 20022) o por el SPI.
 - Eventos: EventBridge y SQS. Los cambios del core se capturan con AWS DMS.
 - Identidad: OAuth 2.0 Authorization Code + PKCE con perfil FAPI 2.0. Keycloak 26.8 para clientes y Entra ID para empleados; ambos se pueden cambiar por el IdP que el banco ya tenga.
 - Onboarding: KYC con prueba de vida certificada y validación contra el Registro Civil. Para el ingreso diario, passkeys con la huella o el Face ID del teléfono.
 - Notificaciones: push y correo, con SMS solo como respaldo. Se generan desde los cambios del core, así que cubren también cajero y ventanilla.
 - Auditoría: base de solo inserción con hash encadenado y archivo en S3 Object Lock.
-- Caché: Cache-Aside con Valkey (LFU) para los clientes que más consultan. El saldo nunca se cachea.
+- Caché: Cache-Aside con Valkey (LFU) para los clientes que más consultan. **El saldo nunca se cachea.**
 - Frontend: Angular 22 para web y Flutter 3.47 para móvil. Evalué también React + React Native.
 - DR: cuatro niveles de criticidad (T0 a T3). Lo crítico se recupera en 15 minutos o menos y casi sin pérdida de datos. Además hay respaldos inmutables fuera de AWS, en Oracle Cloud Bogotá.
 
@@ -49,15 +49,15 @@ La fuente editable está en [`infra/infraestructura-aws.drawio`](infra/infraestr
 
 ## Criterio general
 
-Prioricé servicios administrados y estándares abiertos sobre productos, porque un banco mediano no tiene un equipo grande de operación y necesita poder cambiar de proveedor. Muchas decisiones (Entra ID para empleados, contract-first con OpenAPI, una capa anticorrupción frente al core) vienen de lo que he visto funcionar en proyectos de modernización en banca, donde el core legado y los proveedores externos son casi siempre la parte más difícil de integrar.
+Prioricé servicios administrados y estándares abiertos sobre productos, porque un banco mediano no tiene un equipo grande de operación y necesita poder cambiar de proveedor. Muchas decisiones (Entra ID para empleados, contract-first con OpenAPI, una capa anticorrupción frente al core) vienen de lo que he visto funcionar en proyectos de modernización en banca, donde **el core legado y los proveedores externos suelen ser la parte más difícil de integrar**.
 
 ## Supuestos
 
-Asumí un banco mediano con un core genérico on-premise, junto con un sistema complementario de datos y la base de datos principal, que es lo más común en Ecuador. La plataforma no reemplaza al core: el core sigue siendo la fuente de verdad de saldos y movimientos.
+Asumí un banco mediano con un core genérico on-premise, junto con un sistema complementario de datos y la base de datos principal, que es lo más común en Ecuador. La plataforma no reemplaza al core: **el core sigue siendo la fuente de verdad de saldos y movimientos**.
 
 ## Pendientes de validar con el banco
 
-Hay decisiones que dependen de información que el reto no da. Las dejo planteadas en lugar de asumirlas:
+Hay decisiones que dependen de información que el reto no da. **Las dejo planteadas en lugar de asumirlas:**
 
 - Si el proveedor del core permite leer los logs de su base de datos. De eso depende usar CDC con DMS o pedirle eventos al proveedor.
 - La posición de la Superintendencia de Bancos sobre procesar datos de clientes en una región de EE. UU., aunque estén cifrados con llaves del banco.

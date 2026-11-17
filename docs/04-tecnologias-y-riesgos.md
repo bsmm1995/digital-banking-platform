@@ -1,6 +1,6 @@
 # 04. Tecnologías, versiones y riesgos
 
-Para cada tecnología explico por qué la elegí frente a las alternativas, qué riesgo trae y cómo lo mitigaría.
+Para cada tecnología explico **por qué la elegí frente a las alternativas**, qué riesgo trae y cómo lo mitigaría.
 
 ## Versiones de referencia (noviembre de 2026)
 
@@ -47,7 +47,7 @@ La regla es usar la última versión LTS cuando el proyecto la publica, y la úl
 | Tecnología | Por qué | Riesgo | Mitigación |
 |---|---|---|---|
 | Aurora PostgreSQL Global | PostgreSQL estándar y portable, con réplica a otra región en menos de un segundo y failover administrado. Sin licencias como Oracle o SQL Server. | Más caro que RDS simple. El RPO es casi cero, pero no cero. | Graviton y lectores según uso; el outbox evita perder eventos durante el failover. |
-| ElastiCache Valkey | Compatible con Redis, de código abierto y más barato en AWS. | Mostrar datos desactualizados. | TTL corto, invalidación por eventos del CDC y el saldo nunca en caché. |
+| ElastiCache Valkey | Compatible con Redis, de código abierto y más barato en AWS. | Mostrar datos desactualizados. | TTL corto, invalidación por eventos del CDC y **el saldo nunca en caché**. |
 | DynamoDB (notificaciones y almacén de llaves) | Escala sin administración y replica entre regiones con Global Tables. | Modelo de consultas rígido y particiones calientes. | Diseñar las claves según las consultas conocidas; lo relacional queda en Aurora. |
 | S3 Object Lock | Evidencia inmutable para auditoría y KYC a bajo costo. | Una retención mal configurada no se puede corregir después. | Definir los plazos con Cumplimiento antes de activar el modo compliance. |
 

@@ -18,13 +18,13 @@
 
 Dentro de la región principal, EKS, Aurora y ElastiCache se reparten en tres zonas de disponibilidad. EventBridge y SQS ya son regionales.
 
-En el código se usa Resilience4j para circuit breaker, timeouts y reintentos. Lo que no tiene que ser inmediato va por eventos: si Notificaciones o Auditoría se caen, los mensajes esperan en SQS y se procesan cuando vuelven.
+En el código se usa Resilience4j para circuit breaker, timeouts y reintentos. **Lo que no tiene que ser inmediato va por eventos**: si Notificaciones o Auditoría se caen, los mensajes esperan en SQS y se procesan cuando vuelven.
 
 La conexión con el core usa dos enlaces Direct Connect más una VPN de respaldo, hacia el data center principal y el alterno del banco.
 
 ### Qué pasa si se cae el core
 
-El banco tiene un solo core, con su propia alta disponibilidad (clúster, réplica de base y centro alterno). La plataforma no lo duplica; lo aísla para que una caída no se propague.
+El banco tiene un solo core, con su propia alta disponibilidad (clúster, réplica de base y centro alterno). **La plataforma no lo duplica; lo aísla para que una caída no se propague.**
 
 El circuit breaker del Adaptador Core deja de llamar al core y responde "no disponible" de inmediato, en lugar de acumular solicitudes colgadas. El adaptador apunta a una dirección única (DNS o IP virtual), así que si el banco activa su centro alterno, la plataforma lo sigue sin cambios.
 
@@ -51,11 +51,11 @@ No todos los servicios necesitan recuperarse igual de rápido, así que los divi
 | T2 | Onboarding y backoffice | 15 min o menos | 4 h o menos | Pilot light (datos replicados, cómputo bajo demanda) |
 | T3 | Reportes | 24 h | 24 h | Backup & restore |
 
-Perder una transferencia confirmada es un problema financiero y regulatorio; un reporte puede esperar un día. Con niveles, el costo del DR es proporcional a lo que cada servicio aporta.
+Perder una transferencia confirmada es un problema financiero y regulatorio; un reporte puede esperar un día. **Con niveles, el costo del DR es proporcional a lo que cada servicio aporta.**
 
 Los respaldos se hacen con AWS Backup en otra región y otra cuenta, en bóvedas inmutables, como protección contra ransomware.
 
-Además, una copia inmutable de esos respaldos se envía a Oracle Cloud en Bogotá. Es la protección para el caso extremo de perder AWS completo (un ataque masivo a la cuenta, una sanción o un conflicto con el proveedor). Las llaves de cifrado de esa copia se custodian también fuera de AWS, en un HSM del banco o en el vault de Oracle; sin ellas la copia sería ilegible. Hay que ser claro con lo que cubre: protege los datos, no la continuidad del servicio. Reconstruir la plataforma en otra nube tomaría días.
+Además, una copia inmutable de esos respaldos se envía a Oracle Cloud en Bogotá. Es la protección para el caso extremo de perder AWS completo (un ataque masivo a la cuenta, una sanción o un conflicto con el proveedor). Las llaves de cifrado de esa copia se custodian también fuera de AWS, en un HSM del banco o en el vault de Oracle; sin ellas la copia sería ilegible. **Hay que ser claro con lo que cubre: protege los datos, no la continuidad del servicio.** Reconstruir la plataforma en otra nube tomaría días.
 
 La conmutación entre regiones es controlada, con Route 53 ARC, y los simulacros de DR se hacen cada seis meses.
 
@@ -86,4 +86,4 @@ AWS no tiene región en Ecuador. Estas son las opciones que comparé:
 | Chile | A futuro. Hoy está abierta solo a clientes seleccionados; vale la pena revisarla cuando tenga disponibilidad general, catálogo completo y precios. |
 | Multicloud activo (Oracle Bogotá o Santiago) | Descartado para operar. Duplica operación, seguridad y redes. Oracle se usa solo para los respaldos búnker. |
 
-Para la latencia: CloudFront sirve la web desde el borde, la caché evita ir al core en consultas frecuentes, los BFF hacen llamadas en paralelo y la conexión al core es por Direct Connect. Aun así, la latencia real desde Quito y Guayaquil hay que medirla antes de salir a producción.
+Para la latencia: CloudFront sirve la web desde el borde, la caché evita ir al core en consultas frecuentes, los BFF hacen llamadas en paralelo y la conexión al core es por Direct Connect. **Aun así, la latencia real desde Quito y Guayaquil hay que medirla antes de salir a producción.**
