@@ -7,3 +7,6 @@ Thumbs.db
 # Respaldos de draw.io
 *.drawio.bkp
 .$*.bkp
+
+# Material del reto (no se publica)
+requerimiento/
