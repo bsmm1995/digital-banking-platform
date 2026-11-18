@@ -1,6 +1,8 @@
 # Plataforma de banca digital - Banco Ecuador
 
-Mi propuesta para el reto técnico de Arquitecto de Soluciones. El objetivo es una plataforma de banca en línea (web y móvil) donde los clientes consulten sus movimientos, hagan transferencias propias e interbancarias, y donde una persona nueva pueda abrir su cuenta desde el celular con reconocimiento facial.
+Propuesta para el reto técnico de Arquitecto de Soluciones. 
+
+El objetivo es una plataforma de banca en línea (web y móvil) donde los clientes consulten sus movimientos, hagan transferencias propias e interbancarias, y donde una persona nueva pueda abrir su cuenta desde el celular con reconocimiento facial.
 
 Modelo C4 navegable en IcePanel: https://s.icepanel.io/8it5iVKhNeTy2G/qBcE
 

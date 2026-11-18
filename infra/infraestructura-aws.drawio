@@ -82,8 +82,11 @@
                 <mxCell id="c32" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.waf;fillColor=#DD344C;" value="AWS WAF&lt;br&gt;OWASP · Bot Control" vertex="1">
                     <mxGeometry height="48" width="48" x="256" y="580" as="geometry" />
                 </mxCell>
-                <mxCell id="c33" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.shield;fillColor=#DD344C;" value="Shield Advanced" vertex="1">
+                <mxCell id="c33" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.shield;fillColor=#DD344C;" value="Shield Advanced*" vertex="1">
                     <mxGeometry height="48" width="48" x="256" y="690" as="geometry" />
+                </mxCell>
+                <mxCell id="c33n" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fillColor=#FFF8E1;strokeColor=#E0C068;rounded=1;arcSize=8;fontSize=10;fontColor=#5F4B00;spacingLeft=6;spacingRight=6;" value="&lt;b&gt;* Shield:&lt;/b&gt; consta en la arquitectura inicial con Shield Standard (incluido); &lt;b&gt;Shield Advanced&lt;/b&gt; se activa por fases según el riesgo y el volumen de tráfico." vertex="1">
+                    <mxGeometry height="80" width="170" x="195" y="812" as="geometry" />
                 </mxCell>
                 <mxCell id="c34" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.api_gateway;fillColor=#E7157B;" value="API Gateway público&lt;br&gt;(clientes · valida JWT&lt;br&gt;de Keycloak)" vertex="1">
                     <mxGeometry height="48" width="48" x="416" y="470" as="geometry" />
